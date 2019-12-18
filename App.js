@@ -10,7 +10,6 @@ export default function App() {
         <Provider store={store}>
             <View style={styles.container}>
                 <Header/>
-                Test?
                 <CryptoContainer/>
             </View>
         </Provider>

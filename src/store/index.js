@@ -5,7 +5,7 @@ import promise from 'redux-promise'
 import createSagaMiddleware from 'redux-saga';
 import { createLogger } from 'redux-logger';
 import rootReducer from '../reducers'
-import rootSaga from '../saga'
+import {rootSaga} from '../saga'
 
 const sagaMiddleware = createSagaMiddleware();
 
