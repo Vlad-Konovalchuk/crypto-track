@@ -1,31 +1,18 @@
-import { delay, takeEvery, takeLatest, put } from 'redux-saga/effects';
+import { call, takeEvery, takeLatest, put } from "redux-saga/effects";
+import axios from "axios";
+import types from "../actions/actionTypes";
+import { FetchCoinDataSuccess, FetchCoinDataFailed } from "../actions";
+import { apiBaseUrl } from "../constants";
+function* fetchCoinData() {
+  try {
+    const url = `${apiBaseUrl}/v1/ticker/?limit=10`;
+    const res = yield call(axios.get, url);
+    yield put(FetchCoinDataSuccess(res.data));
+  } catch (error) {
+    console.log(error);
+  }
+}
 
-function* increaseCounterAsync() {
-    try {
-        yield delay(4000);
-        yield put({
-            type: 'INCREASE_COUNTER_ASYNC',
-            value: 1,
-        });
-    }
-    catch (error) {
-        console.log(error);
-    }
-};
-export function* watchIncreaseCounter() {
-    yield takeLatest('INCREASE_COUNTER', increaseCounterAsync);
-};
-function* decreaseCounter() {
-    try {
-        yield put({
-            type: 'DECREASE_COUNTER_ASYNC',
-            value: 1,
-        });
-    }
-    catch (error) {
-        console.log(error);
-    }
-};
 export function* watchDecreaseCounter() {
-    yield takeLatest('DECREASE_COUNTER', decreaseCounter);
-};
+  yield takeLatest(types.FETCH_COIN_DATA, fetchCoinData);
+}
